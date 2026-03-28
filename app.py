@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # -------------------------------
-# Buzzwords (expanded but not over-noisy)
+# Buzzwords
 # -------------------------------
 buzzwords = [
     "eco-friendly","environmentally friendly","green","natural","organic",
@@ -62,11 +62,12 @@ def has_negative(text):
 # UI
 # -------------------------------
 st.title("🌱 Green-Truth Auditor")
-st.caption("Rule-based NLP with sentence-level analysis + brand verification (RAG-ready)")
+st.caption("Rule-based NLP with sentence-level analysis + brand verification")
 
 user_input = st.text_area("Enter product description")
 url = st.text_input("Or paste product URL")
 brand = st.text_input("Enter brand (optional)")
+advanced_mode = st.checkbox("🔮 Enable Advanced AI Mode (Future Feature)")
 
 # -------------------------------
 # Analyze
@@ -74,7 +75,6 @@ brand = st.text_input("Enter brand (optional)")
 if st.button("Analyze"):
     text = user_input.strip()
 
-    # URL extraction
     if url.strip():
         extracted = get_text_from_url(url)
         if extracted:
@@ -105,29 +105,24 @@ if st.button("Analyze"):
     numbers = has_numbers(text)
 
     # -------------------------------
-    # Weighted scoring (balanced)
+    # Scoring
     # -------------------------------
     score = 100
-
-    # buzzword density penalty
     score -= min(len(found_buzz) * 8, 40)
 
-    # no proof penalty
     if not proof:
         score -= 30
 
-    # negative signal penalty
     if negative:
         score -= 20
 
-    # quantitative claims bonus
     if numbers:
         score += 8
 
     score = max(0, min(score, 100))
 
     # -------------------------------
-    # Classification (handles mixed)
+    # Classification
     # -------------------------------
     if proof and not found_buzz:
         result = "✅ Genuine"
@@ -144,18 +139,18 @@ if st.button("Analyze"):
     # Reason
     # -------------------------------
     if result == "✅ Genuine":
-        reason = "Verifiable evidence/certifications found without reliance on vague buzzwords."
+        reason = "Verifiable certifications found without vague claims."
     elif result == "⚠️ Mixed Claim":
-        reason = f"Contains evidence but also uses vague terms: {', '.join(found_buzz)}."
+        reason = f"Contains proof but also buzzwords: {', '.join(found_buzz)}."
     elif result == "❌ Greenwashing":
-        reason = f"Relies on buzzwords without proof: {', '.join(found_buzz)}."
+        reason = f"Uses buzzwords without evidence: {', '.join(found_buzz)}."
     elif result == "❌ Risky Claim":
-        reason = "Contains negative or risky environmental signals."
+        reason = "Contains risky environmental signals."
     else:
-        reason = "Insufficient information to verify sustainability."
+        reason = "Not enough information."
 
     # -------------------------------
-    # Output
+    # OUTPUT
     # -------------------------------
     st.subheader("🔍 Result")
 
@@ -170,19 +165,48 @@ if st.button("Analyze"):
     st.progress(score/100)
     st.write(f"💡 Reason: {reason}")
 
-    # Verdict
-    if score >= 70:
-        st.success("🌟 Verdict: Trustable")
-    elif score >= 40:
-        st.warning("⚠️ Verdict: Needs Verification")
-    else:
-        st.error("❌ Verdict: High Greenwashing Risk")
+    # -------------------------------
+    # NEW FEATURES (WINNING PART)
+    # -------------------------------
 
-    if found_buzz:
-        st.write("⚠️ Buzzwords detected:", ", ".join(found_buzz))
+    # Scorecard
+    st.markdown("### 📊 Sustainability Scorecard")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Buzzwords", len(found_buzz))
+    with col2:
+        st.metric("Evidence", "Yes" if proof else "No")
+    with col3:
+        st.metric("Risk Signals", "Yes" if negative else "No")
+
+    # Sentence Analysis
+    st.markdown("### 🔎 Sentence Analysis")
+    for s in sentences:
+        label = ""
+        if detect_buzzwords(s):
+            label += "⚠️ "
+        if has_proof(s):
+            label += "✅ "
+        if has_negative(s):
+            label += "❌ "
+        if label:
+            st.write(f"{label} → {s}")
+
+    # Trust Badge
+    if score >= 70:
+        st.markdown("🟢 **Eco Trust Badge: VERIFIED**")
+    elif score >= 40:
+        st.markdown("🟡 **Eco Trust Badge: QUESTIONABLE**")
+    else:
+        st.markdown("🔴 **Eco Trust Badge: MISLEADING**")
+
+    # Why it matters
+    st.markdown("### 🌍 Why this matters")
+    st.write("Helps users avoid greenwashing and promotes transparency.")
 
     # -------------------------------
-    # Brand check (CSV RAG)
+    # Brand check
     # -------------------------------
     try:
         df = pd.read_csv("brands.csv")
@@ -190,20 +214,19 @@ if st.button("Analyze"):
             match = df[df["brand"].str.lower() == brand.lower()]
             if not match.empty:
                 b = match.iloc[0]
-                st.info(
-                    f"Brand: {b['brand']}\n\n"
-                    f"Certification: {b['certified']}\n\n"
-                    f"Category: {b['category']}\n\n"
-                    f"Notes: {b['notes']}"
-                )
+                st.info(f"""
+Brand: {b['brand']}
+Certification: {b['certified']}
+Category: {b['category']}
+Notes: {b['notes']}
+""")
             else:
-                st.warning("Brand not found in database")
+                st.warning("Brand not found")
     except:
         st.warning("brands.csv not found")
 
-    # Debug (for judges)
-    with st.expander("🔎 What we detected"):
-        st.write("Buzzwords:", found_buzz if found_buzz else "None")
-        st.write("Proof present:", proof)
-        st.write("Negative signals:", negative)
-        st.write("Numbers present:", numbers)
+    # Debug
+    with st.expander("🔎 Debug"):
+        st.write("Buzzwords:", found_buzz)
+        st.write("Proof:", proof)
+        st.write("Negative:", negative)
