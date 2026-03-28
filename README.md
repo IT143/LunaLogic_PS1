@@ -35,3 +35,4 @@ c)key features:
 🖥️ Streamlit UI – Simple interactive dashboard for input and results
 🎯 Final Verdict – Outputs GENUINE / SUSPICIOUS / GREENWASHING status
 🧾 Explainable Results – Shows reasoning behind AI decision
+
