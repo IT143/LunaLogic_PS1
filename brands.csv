@@ -1,19 +1,37 @@
 brand,certified,category,notes
-Patagonia,Yes,Clothing,GOTS certified organic cotton
-IKEA,Yes,Furniture,Sustainable sourcing practices
-Unilever,Yes,FMCG,ESG and sustainability initiatives
-Tesla,Yes,Automobile,Electric and carbon reduction focus
-Allbirds,Yes,Footwear,Carbon neutral brand
-The Body Shop,Yes,Cosmetics,Ethical sourcing and cruelty-free
-Lush,Yes,Cosmetics,Handmade and eco-conscious products
-Ecover,Yes,Cleaning,Plant-based and biodegradable products
+Patagonia,Yes,Clothing,GOTS-certified organic cotton and transparency
+IKEA,Yes,Furniture,Sustainable sourcing and circular economy initiatives
+Unilever,Yes,FMCG,Global ESG sustainability commitments
+Tesla,Yes,Automobile,Electric vehicles and carbon reduction
+Allbirds,Yes,Footwear,Carbon-neutral products using natural materials
+The Body Shop,Yes,Cosmetics,Ethical sourcing and cruelty-free policies
+Lush,Yes,Cosmetics,Minimal packaging and handmade products
+Ecover,Yes,Cleaning,Plant-based biodegradable cleaning products
+Interface,Yes,Manufacturing,Carbon negative flooring company
+Seventh Generation,Yes,FMCG,Plant-based and eco-certified products
 
-Nike,No,Clothing,Past environmental controversies
+Nike,No,Clothing,Mixed sustainability claims and controversies
 H&M,No,Clothing,Fast fashion sustainability concerns
-Zara,No,Clothing,Mass production environmental impact
-Shein,No,Clothing,Ultra fast fashion criticism
-Adidas,No,Clothing,Mixed sustainability efforts
+Zara,No,Clothing,High-volume production environmental impact
+Shein,No,Clothing,Ultra-fast fashion criticism
+Adidas,No,Clothing,Partial sustainability efforts
 Puma,No,Clothing,Limited transparency claims
 Forever21,No,Clothing,Fast fashion waste issues
 
-Unknown,Unknown,General,No verified data available
+Tata,Yes,Conglomerate,Strong sustainability and ESG initiatives
+Reliance,No,Conglomerate,Mixed environmental record
+ITC,Yes,FMCG,Carbon positive and water positive company
+Infosys,Yes,Technology,Carbon neutral and sustainability leader
+Wipro,Yes,Technology,Renewable energy initiatives
+Mahindra,Yes,Automobile,Electric mobility and sustainability focus
+Amul,Unknown,FMCG,Limited environmental transparency
+Patanjali,No,FMCG,Natural branding but lacks verification
+Dabur,Yes,FMCG,Ayurvedic products with sustainability initiatives
+Hindustan Unilever,Yes,FMCG,Subsidiary of Unilever with ESG focus
+Biotique,Unknown,Cosmetics,Natural claims without strong certifications
+Khadi,Unknown,Cosmetics,Traditional natural products but limited data
+FabIndia,Yes,Clothing,Handcrafted and sustainable textiles
+Godrej,Yes,Conglomerate,Sustainability and green initiatives
+Asian Paints,Yes,Manufacturing,Low VOC and eco-friendly coatings
+
+Unknown,Unknown,General,No verified sustainability data available
